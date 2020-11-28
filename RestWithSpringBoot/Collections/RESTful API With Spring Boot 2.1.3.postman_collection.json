@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "2b24c357-27b0-42e0-887c-cc89c7a53d73",
-		"name": "RESTful API With Spring Boot 2.1.3",
+		"name": "RESTfull API With Spring Boot 2.1.3 H2",
 		"description": "Some description about your API.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},

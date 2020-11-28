@@ -2,6 +2,7 @@ package br.com.hvadriano.data.vo.v1;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
@@ -9,7 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({ "id", "balance", "createDate", "enabled" })
+import br.com.hvadriano.data.model.Transaction;
+import br.com.hvadriano.data.model.User;
+
+@JsonPropertyOrder({ "id", "balance", "createDate", "enabled", "user", "listTransaction" })
 public class AccountVO extends ResourceSupport implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +21,13 @@ public class AccountVO extends ResourceSupport implements Serializable{
 	@Mapping("id")
 	@JsonProperty("id")
 	private Long key;
+	
+	@Mapping("user")
+	@JsonProperty("user")
+	private UserVO userVO;
+	
+	private List<Transaction> listTransaction;
+	
 	private Double balance;
 	private Date createDate;
 	private Boolean enabled;
@@ -25,6 +36,18 @@ public class AccountVO extends ResourceSupport implements Serializable{
 	}
 	public void setKey(Long key) {
 		this.key = key;
+	}
+	public UserVO getUserVO() {
+		return userVO;
+	}
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+	public List<Transaction> getListTransaction() {
+		return listTransaction;
+	}
+	public void setListTransaction(List<Transaction> listTransaction) {
+		this.listTransaction = listTransaction;
 	}
 	public Double getBalance() {
 		return balance;
@@ -52,6 +75,8 @@ public class AccountVO extends ResourceSupport implements Serializable{
 		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((listTransaction == null) ? 0 : listTransaction.hashCode());
+		result = prime * result + ((userVO == null) ? 0 : userVO.hashCode());
 		return result;
 	}
 	@Override
@@ -83,7 +108,18 @@ public class AccountVO extends ResourceSupport implements Serializable{
 				return false;
 		} else if (!key.equals(other.key))
 			return false;
+		if (listTransaction == null) {
+			if (other.listTransaction != null)
+				return false;
+		} else if (!listTransaction.equals(other.listTransaction))
+			return false;
+		if (userVO == null) {
+			if (other.userVO != null)
+				return false;
+		} else if (!userVO.equals(other.userVO))
+			return false;
 		return true;
 	}
+	
 	
 }

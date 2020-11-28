@@ -23,23 +23,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hvadriano.data.vo.v1.AccountVO;
-import br.com.hvadriano.services.AccountServices;
+import br.com.hvadriano.data.vo.v1.TransactionVO;
+import br.com.hvadriano.services.TransactionServices;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "AccountEndpoint")
+@Api(tags = "TransactionEndpoint")
 @RestController
-@RequestMapping("/api/account/v1")
-public class AccountController {
+@RequestMapping("/api/transaction/v1")
+public class TransactionController {
 	
 	@Autowired
-	private AccountServices service;
+	private TransactionServices service;
 	
 	@Autowired
-	private PagedResourcesAssembler<AccountVO> assembler;
+	private PagedResourcesAssembler<TransactionVO> assembler;
 	
-	@ApiOperation(value = "Find all account" ) 
+	@ApiOperation(value = "Find all Transaction" ) 
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	public ResponseEntity<?> findAll(
 			@RequestParam(value="page", defaultValue = "0") int page,
@@ -50,46 +50,46 @@ public class AccountController {
 		
 		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "id"));
 		
-		Page<AccountVO> accounts =  service.findAll(pageable);
-		accounts
+		Page<TransactionVO> transactions =  service.findAll(pageable);
+		transactions
 			.stream()
 			.forEach(p -> p.add(
-					linkTo(methodOn(AccountController.class).findById(p.getKey())).withSelfRel()
+					linkTo(methodOn(TransactionController.class).findById(p.getKey())).withSelfRel()
 				)
 			);
 		
-		PagedResources<?> resources = assembler.toResource(accounts);
+		PagedResources<?> resources = assembler.toResource(transactions);
 		
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "Find a specific account by your ID" )
+	@ApiOperation(value = "Find a specific Transaction by your ID" )
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public AccountVO findById(@PathVariable("id") Long id) {
-		AccountVO accountVO = service.findById(id);
-		accountVO.add(linkTo(methodOn(AccountController.class).findById(id)).withSelfRel());
-		return accountVO;
+	public TransactionVO findById(@PathVariable("id") Long id) {
+		TransactionVO TransactionVO = service.findById(id);
+		TransactionVO.add(linkTo(methodOn(TransactionController.class).findById(id)).withSelfRel());
+		return TransactionVO;
 	}	
 	
-	@ApiOperation(value = "Create a new account") 
+	@ApiOperation(value = "Create a new Transaction") 
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
 			consumes = { "application/json", "application/xml", "application/x-yaml" })
-	public AccountVO create(@RequestBody AccountVO account) {
-		AccountVO accountVO = service.create(account);
-		accountVO.add(linkTo(methodOn(AccountController.class).findById(accountVO.getKey())).withSelfRel());
-		return accountVO;
+	public TransactionVO create(@RequestBody TransactionVO transaction) {
+		TransactionVO transactionVO = service.create(transaction);
+		transactionVO.add(linkTo(methodOn(TransactionController.class).findById(transactionVO.getKey())).withSelfRel());
+		return transactionVO;
 	}
 	
-	@ApiOperation(value = "Update a specific account")
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
-			consumes = { "application/json", "application/xml", "application/x-yaml" })
-	public AccountVO update(@RequestBody AccountVO account) {
-		AccountVO accountVO = service.update(account);
-		accountVO.add(linkTo(methodOn(AccountController.class).findById(accountVO.getKey())).withSelfRel());
-		return accountVO;
-	}	
+//	@ApiOperation(value = "Update a specific Transaction")
+//	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
+//			consumes = { "application/json", "application/xml", "application/x-yaml" })
+//	public TransactionVO update(@RequestBody TransactionVO transaction) {
+//		TransactionVO transactionVO = service.update(transaction);
+//		transactionVO.add(linkTo(methodOn(TransactionController.class).findById(transactionVO.getKey())).withSelfRel());
+//		return transactionVO;
+//	}	
 	
-	@ApiOperation(value = "Delete a specific account by your ID")
+	@ApiOperation(value = "Delete a specific Transaction by your ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		service.delete(id);

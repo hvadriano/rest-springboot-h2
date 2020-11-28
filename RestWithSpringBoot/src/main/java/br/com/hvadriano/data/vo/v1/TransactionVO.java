@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+import br.com.hvadriano.data.model.Account;
+
 @JsonPropertyOrder({ "id", "accountId", "transactionValue", "transactionType", "dueDate" })
 public class TransactionVO extends ResourceSupport implements Serializable{
 
@@ -18,7 +20,7 @@ public class TransactionVO extends ResourceSupport implements Serializable{
 	@JsonProperty("id")
 	private Long key;
 	
-	private Long accountId;
+	private AccountVO account;
 	
 	private Double transactionValue;
 	private String transactionType;
@@ -29,11 +31,11 @@ public class TransactionVO extends ResourceSupport implements Serializable{
 	public void setKey(Long key) {
 		this.key = key;
 	}
-	public Long getAccountId() {
-		return accountId;
+	public AccountVO getAccount() {
+		return account;
 	}
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setAccount(AccountVO account) {
+		this.account = account;
 	}
 	public Double getTransactionValue() {
 		return transactionValue;
@@ -57,7 +59,7 @@ public class TransactionVO extends ResourceSupport implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((accountId == null) ? 0 : accountId.hashCode());
+		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((transactionType == null) ? 0 : transactionType.hashCode());
@@ -73,10 +75,10 @@ public class TransactionVO extends ResourceSupport implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TransactionVO other = (TransactionVO) obj;
-		if (accountId == null) {
-			if (other.accountId != null)
+		if (account == null) {
+			if (other.account != null)
 				return false;
-		} else if (!accountId.equals(other.accountId))
+		} else if (!account.equals(other.account))
 			return false;
 		if (dueDate == null) {
 			if (other.dueDate != null)
@@ -100,6 +102,5 @@ public class TransactionVO extends ResourceSupport implements Serializable{
 			return false;
 		return true;
 	}
-	
 	
 }

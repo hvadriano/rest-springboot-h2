@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="account")
@@ -44,7 +45,7 @@ public class Account implements Serializable{
 	
 	@Column(nullable = false)
 	private Boolean enabled;
-
+	
 	public Long getId() {
 		return id;
 	}

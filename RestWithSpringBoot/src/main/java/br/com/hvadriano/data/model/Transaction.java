@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="transaction")
@@ -54,6 +55,17 @@ public class Transaction implements Serializable{
 	@Column(name = "due_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dueDate = new Date();
+
+	@Transient
+	private Long accountId;
+	
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
 
 	public Long getId() {
 		return id;
